@@ -1,0 +1,19 @@
+services:
+  adminer:
+    image: adminer
+    restart: unless-stopped
+    ports:
+      - 5070:8080
+    depends_on:
+      - mariadb
+    environment:
+      ADMINER_DEFAULT_SERVER: mariadb
+
+  mariadb:
+    image: mariadb
+    restart: unless-stopped
+    volumes:
+      - ./database:/docker-entrypoint-initdb.d/
+    environment:
+      MARIADB_ROOT_PASSWORD: 123
+      MARIADB_DATABASE: ali
